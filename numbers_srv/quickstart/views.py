@@ -1,7 +1,8 @@
-from django.shortcuts import render
-
+#from django.shortcuts import renderq
+# import requests
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
+from django.http import HttpResponse
 from numbers_srv.quickstart.serializers import UserSerializer, GroupSerializer
 
 
@@ -19,3 +20,9 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+#  def index(request):
+#     r = requests.get('http://httpbin.org/status/418')
+#     print(r.text)
+#     return HttpResponse('<pre>' + r.text + '</pre>') 
