@@ -22,7 +22,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-#  def index(request):
-#     r = requests.get('http://httpbin.org/status/418')
-#     print(r.text)
-#     return HttpResponse('<pre>' + r.text + '</pre>') 
+  def index(request):
+     r = requests.get('http://httpbin.org/status/418')
+     print(r.text)
+     return HttpResponse('<pre>' + r.text + '</pre>') 
