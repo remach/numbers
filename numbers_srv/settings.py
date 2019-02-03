@@ -25,7 +25,7 @@ SECRET_KEY = 'emf#u(+(h9$sfoj0f8o%x*2qx@l=2-@!qudaldm*^7trv935sy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
