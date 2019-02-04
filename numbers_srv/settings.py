@@ -80,10 +80,10 @@ DATABASES = {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'teqagxkm',
-        'USER' : 'teqagxkm',
-        'PASSWORD' : '2L7qeR2ItzlxBn7mWGB8xq1m_OHh4sGz',
-        'HOST' : 'manny.db.elephantsql.com',
+        'NAME': 'Numbers',
+        'USER' : 'postgres',
+        'PASSWORD' : '',
+        'HOST' : 'localhost',
         'PORT' : '5432',
     }
 }
@@ -139,10 +139,10 @@ DATABASES['default'].update(db_from_env)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # The URL to use when referring to static files (where they will be served from)
-STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 # Simplified static file serving.
