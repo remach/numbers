@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Untitled</title>
+  <meta charset="utf-8">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <link rel="stylesheet" href="./css/tipped.css">
+<script src="./js/tipped.js"></script>
+  <script>
+  
+  //функция парсинга и тегирования
+ $.fn.highlight = function (b, k) {
+     function l() {
+         $("." + c.className).each(function (c, e) {
+             var a = e.previousSibling,
+                 d = e.nextSibling,
+                 b = $(e),
+                 f = "";
+             a && 3 == a.nodeType && (f += a.data, a.parentNode.removeChild(a));
+             e.firstChild && (f += e.firstChild.data);
+             d && 3 == d.nodeType && (f += d.data, d.parentNode.removeChild(d));
+             b.replaceWith(f);
+         })
+     }
+
+     function h(b) {
+         b = b.childNodes;
+         for (var e = b.length, a; a = b[--e];)
+             if (3 == a.nodeType) {
+                 if (!/^\s+$/.test(a.data)) {
+                     var d = a.data,
+                         d = d.replace(m, '<span class="' + c.className + '"data-content="$1 Стоимость чегото">$1</span>');
+                     $(a).replaceWith(d)
+                 }
+             } else 
+			 {
+			 1 == a.nodeType && a.childNodes && (!/(script|style)/i.test(a.tagName) && a.className != c.className) && h(a);
+			 
+			 console.log("2");
+			 }
+     }
+     var c = {
+         split: "\\s+",
+         className: "highlight",
+         caseSensitive: !1,
+         strictly: !1,
+         remove: !0
+     }, c = $.extend(c, k);
+     c.remove && l();
+	 b = $.trim(b);
+	
+     var g = c.strictly ? "" : "\\S*",
+       //  m = RegExp("(" + g + b.replace(RegExp(c.split, "g"), g + "|" + g) + g + ")", (c.caseSensitive ? "" : "i") + "g");
+	   //регулярное выражение, которое отвечает за поиск денежных выражений
+         m = RegExp("(" + "\\d+[\\$,р]"  + ")", (c.caseSensitive ? "" : "i") + "g");
+		// m = RegExp("Вот");
+     return this.each(function () {
+         b && h(this);
+
+     })
+ };
+ 
+ $(function () {
+ $('#scan').click(function () {
+ console.log($(this)[0].offsetTop);
+        var settings = {};
+        var pattern = $('#pattern').val();
+        $("#right").prop("checked") && (settings.strictly = true);
+        $("#case").prop("checked") && (settings.caseSensitive = true);
+        $("#remove").prop("checked") && (settings.remove = false);
+        pattern && $("div").highlight(pattern, settings)
+    })
+ })
+  $(function () {
+   $('#fuck').click(function () {
+   
+ console.log($(this)[0].innerHTML);
+   })
+  })
+ // выполнение функции парсинга и тегирования при загрузке страницы
+ $(window).load(function() {
+	var settings = {};
+        var pattern = $('#pattern').val();
+        $("#right").prop("checked") && (settings.strictly = true);
+        $("#case").prop("checked") && (settings.caseSensitive = true);
+        $("#remove").prop("checked") && (settings.remove = false);
+        pattern && $("div").highlight(pattern, settings)
+
+     Tipped.create('.highlight', function(element) {
+	  var target = $(element).data('content');
+	  var text="12";
+      var xhr = new XMLHttpRequest();
+	  xhr.open('GET', 'http://api.obr.space/number/?format=json&value='+target.replace(/\D+/gi,""), false);
+	  xhr.send();
+	  // (3)
+	    if (xhr.status != 200) {
+		console.log("error");
+	  } else {
+		var response = JSON.parse(xhr.responseText);
+		console.log(response.results[0].value + response.results[0].unit + " - "+ response.results[0].description_text);
+		text = response.results[0].value + response.results[0].unit + " - "+ response.results[0].description_text;
+	  }
+	
+	  return {
+        title: $(element).data('title'),
+        content:text
+      };
+    }, {
+      skin: 'light'
+    });
+}); 
+
+
+
+ </script>
+  <style type="text/css">
+   body{
+     background-color: #FFFF42;
+   }
+/*
+span.highlight {
+    color: #FFFFFF;
+    padding:0px 12px 2px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0000CD), to(#DBDBFF));
+    background: -webkit-linear-gradient(left, #0000CD, #DBDBFF);
+    background: -moz-linear-gradient(left, #0000CD, #DBDBFF);
+    background: -o-linear-gradient(left, #0000CD, #DBDBFF);
+    background: -ms-linear-gradient(left, #0000CD, #DBDBFF);
+    background: linear-gradient(left, #0000CD, #DBDBFF);
+    background-color: #0000CD;
+	-webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -o-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+
+
+    } 
+	*/
+#fuck{
+display:block;
+position:sticky;
+top:0;
+}
+	</style>
+</head>
+
+<body>
+<span id ="fuck">fuck you </span>
+  <div >
+    Вот только как организовать этот код ума не приложу) 10000$ 10000 $ 10000р $10000
+    Я мог бы взять и изменить допустим цвет всего абзаца
+    с указанным ID или еще какие то свойства целого
+    элемента. Но к3ак взять и изменить отдельное слово
+    ума не приложу, по сути мне только этот моме1231нт и
+    нужно объясни44575ть желательно на примере и с
+    коментариями. У меня цель н123123е просто скопировать
+    готовый скрипт но еще и разобраться в нем что бы в
+    будущем таких вопросов не возникало. Вот объясните
+    мне как взять и организовать п2312оиск слова на ВСЕЙ
+    странице и что бы после нахождения тут же
+    обратиться к свойству данной строки и изменить ее
+    цвет. Как я понял функция match() по идеи должна
+    заниматься поиском совпадений в строке но как при
+    этом цвет поменять? С этим я окончательно запутался.
+  </div>
+
+  <form>
+    <input id="pattern" name="" value="вот     поиск слов"><label> слова через пробел|ы</label><br>
+    <input id="right" name="" type="checkbox"><label>точное совпадение</label><br>
+    <input id="case" name="" type="checkbox"><label>зависит от регистра</label><br>
+    <input id="remove" name="" type="checkbox"><label>не убирать предыдущее выделение</label><br>
+    <input id="scan" name="" type="button" value="scan">
+  </form>
+    <p>
+    Вот только как организовать этот код ума не приложу) 10000$ 10000 $ 10000р $10000
+    Я мог бы взять и изменить допустим цвет всего абзаца
+    с указанным ID или еще какие то свойства целого
+    элемента. Но к3ак взять и изменить отдельное слово
+    ума не приложу, по сути мне только этот моме1231нт и
+    нужно объясни44575ть желательно на примере и с
+    коментариями. У меня цель н123123е просто скопироват</p>
+   <div >10000$ 10000 $ 10000р $10000 ь
+    готовый скрипт но еще и разобраться в нем что бы в
+    будущем таких вопросов не возникало. Вот объясните
+    мне как взять и организовать п2312оиск слова на ВСЕЙ
+    странице и что бы после нахождения тут же
+    обратиться к свойству данной строки и изменить ее
+    цвет. Как я понял функция match() по идеи должна
+    заниматься поиском совпадений в строке но как при
+    этом цвет поменять? С этим я окончательно запутался.
+  </div>
+
+</body>
+</html>
