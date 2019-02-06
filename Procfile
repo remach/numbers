@@ -1,1 +1,1 @@
-web: gunicorn numbers_srv.wsgi --log-file -
+web: gunicorn number.wsgi --log-file -
