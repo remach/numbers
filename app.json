@@ -15,6 +15,7 @@
     "HEROKU_APP_NAME": {
       "required": true
     }
+   }
   "formation": {
     "web": {
       "quantity": 1
