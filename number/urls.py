@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from rest_framework import routers
 from number import views
@@ -22,8 +24,8 @@ from number import views
 
 
 router = routers.DefaultRouter()
-#router.register(r'users', views.UserViewSet)
-#router.register(r'groups', views.GroupViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
 router.register(r'number', views.NumberViewSet, 'Number')
 
 urlpatterns = [
@@ -31,5 +33,5 @@ urlpatterns = [
     #path('^number/(?P<value>.+)/$', views.NumberList.as_view()),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
