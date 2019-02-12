@@ -74,7 +74,7 @@ $(window).load(function() {
        $("#remove").prop("checked") && (settings.remove = false);
        pattern && $("div").highlight(pattern, settings)
     Tipped.create('.highlight', function(element) {
-     var target = $(element).data('content');
+     var target = $(element).data('content').toString( );
      var text="12";
      var xhr = new XMLHttpRequest();
      xhr.open('GET', 'http://api.obr.space/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
