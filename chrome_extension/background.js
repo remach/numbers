@@ -1,9 +1,9 @@
 chrome.browserAction.onClicked.addListener(function (tab) {
 	// for the current tab, inject the "inject.js" file & execute it
   chrome.tabs.executeScript(tab.ib, {
-		file: 'js/jquery.js'
+		file: 'jquery.js'
   });
   chrome.tabs.executeScript(tab.ib, {
-		file: 'js/numbers.js'
+		file: 'numbers.js'
   });
 });
