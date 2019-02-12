@@ -1,0 +1,1 @@
+& "C:\Program Files\PostgreSQL\10\bin\pg_restore.exe" -Fc -d Numbers -U postgres  -v -1 .\Numbers.dump
