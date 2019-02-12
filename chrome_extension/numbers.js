@@ -1,8 +1,3 @@
-var script = document.createElement("SCRIPT");
-script.src = 'http://code.jquery.com/jquery-1.12.4.min.js';
-script.type = 'text/javascript';
-document.getElementsByTagName("head")[0].appendChild(script);
-
 //функция парсинга и тегирования
 $.fn.highlight = function (b, k) {
     function l() {
@@ -29,8 +24,6 @@ $.fn.highlight = function (b, k) {
             } else 
             {
             1 == a.nodeType && a.childNodes && (!/(script|style)/i.test(a.tagName) && a.className != c.className) && h(a);
-            
-            console.log("2");
             }
     }
     var c = {
@@ -43,10 +36,11 @@ $.fn.highlight = function (b, k) {
     c.remove && l();
     b = $.trim(b);
    
-    var g = c.strictly ? "" : "\\S*",
+    var g = c.strictly ? "" : "\\S*"
       //  m = RegExp("(" + g + b.replace(RegExp(c.split, "g"), g + "|" + g) + g + ")", (c.caseSensitive ? "" : "i") + "g");
       //регулярное выражение, которое отвечает за поиск денежных выражений
-        m = RegExp(/(\d[\d|.| |,]+)/, (c.caseSensitive ? "" : "i") + "g");
+    var m = RegExp(/(\d[\d|.| |,]+)/, (c.caseSensitive ? "" : "i") + "g");
+        
        // m = RegExp("Вот");
     return this.each(function () {
         b && h(this);
@@ -61,7 +55,7 @@ console.log($(this)[0].offsetTop);
        $("#right").prop("checked") && (settings.strictly = true);
        $("#case").prop("checked") && (settings.caseSensitive = true);
        $("#remove").prop("checked") && (settings.remove = false);
-       pattern && $("div").highlight(pattern, settings)
+       pattern && $("body").highlight(pattern, settings)
    })
 })
  $(function () {
@@ -71,13 +65,15 @@ console.log($(this)[0].innerHTML);
   })
  })
 // выполнение функции парсинга и тегирования при загрузке страницы
-$(window).load(function() {
+start = function() {
    var settings = {};
-       var pattern = $('#pattern').val();
-       $("#right").prop("checked") && (settings.strictly = true);
-       $("#case").prop("checked") && (settings.caseSensitive = true);
-       $("#remove").prop("checked") && (settings.remove = false);
-       pattern && $("div").highlight(pattern, settings)
+      var pattern = $('#pattern').val();
+      //  $("#right").prop("checked") && (settings.strictly = true);
+      //  $("#case").prop("checked") && (settings.caseSensitive = true);
+      //  $("#remove").prop("checked") && (settings.remove = false);
+      //  pattern && 
+    $("p").highlight(pattern, settings)
+   
     Tipped.create('.highlight', function(element) {
      var target = $(element).data('content').toString( );
      var text="12";
@@ -100,4 +96,6 @@ $(window).load(function() {
    }, {
      skin: 'light'
    });
-}); 
+}; 
+
+start()
