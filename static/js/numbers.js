@@ -18,7 +18,7 @@ $.fn.highlight = function (b, k) {
             if (3 == a.nodeType) {
                 if (!/^\s+$/.test(a.data)) {
                     var d = a.data,
-                        d = d.replace(m, '<span class="' + c.className + '"data-content="$1 Стоимость чегото">$1</span>');
+                        d = d.replace(m, '<span class="' + c.className + '"data-content="$1">$1</span>');
                     $(a).replaceWith(d)
                 }
             } else 
@@ -41,7 +41,7 @@ $.fn.highlight = function (b, k) {
     var g = c.strictly ? "" : "\\S*",
       //  m = RegExp("(" + g + b.replace(RegExp(c.split, "g"), g + "|" + g) + g + ")", (c.caseSensitive ? "" : "i") + "g");
       //регулярное выражение, которое отвечает за поиск денежных выражений
-        m = RegExp("(" + "\\d+[\\$,р]"  + ")", (c.caseSensitive ? "" : "i") + "g");
+        m = RegExp(/(\d[\d|.| |,]+)/, (c.caseSensitive ? "" : "i") + "g");
        // m = RegExp("Вот");
     return this.each(function () {
         b && h(this);
@@ -77,7 +77,7 @@ $(window).load(function() {
      var target = $(element).data('content');
      var text="12";
      var xhr = new XMLHttpRequest();
-     xhr.open('GET', 'http://api.obr.space/number/?format=json&value='+target.replace(/\D+/gi,""), false);
+     xhr.open('GET', 'http://api.obr.space/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
      xhr.send();
      // (3)
        if (xhr.status != 200) {
