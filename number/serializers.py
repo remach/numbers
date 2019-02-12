@@ -7,7 +7,7 @@ from rest_framework import serializers
 class NumberSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Number
-        fields = ('value', 'description_text', 'unit')
+        fields = ('value', 'description_text', 'unit', 'link', 'pub_date')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

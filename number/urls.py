@@ -28,6 +28,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'number', views.NumberViewSet, 'Number')
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('^number/(?P<value>.+)/$', views.NumberList.as_view()),
