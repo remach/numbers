@@ -1,84 +1,44 @@
 //функция парсинга и тегирования
-$.fn.highlight = function (b, k) {
-    function l() {
-        $("." + c.className).each(function (c, e) {
-            var a = e.previousSibling,
-                d = e.nextSibling,
-                b = $(e),
-                f = "";
-            a && 3 == a.nodeType && (f += a.data, a.parentNode.removeChild(a));
-            e.firstChild && (f += e.firstChild.data);
-            d && 3 == d.nodeType && (f += d.data, d.parentNode.removeChild(d));
-            b.replaceWith(f);
-        })
-    }
-    function h(b) {
-        b = b.childNodes;
-        for (var e = b.length, a; a = b[--e];)
+$.fn.highlight = function (pattern, settings_arg="highlight") {
+      var settings_obj = {
+        // split: "\\s+",
+        className: "highlight",
+        // caseSensitive: !1,
+        // strictly: !1,
+        // remove: !0
+      };
+      settings_obj = $.extend(settings_obj, settings_arg);
+      //c.remove && l();
+     // b = $.trim(b); //WTF?
+    function addClassNameToFindReuslt(element) {
+        element = element.childNodes;
+        for (var e = element.length, a; a = element[--e];)
             if (3 == a.nodeType) {
                 if (!/^\s+$/.test(a.data)) {
                     var d = a.data,
-                        d = d.replace(m, '<span class="' + c.className + '"data-content="$1">$1</span>');
+                        d = d.replace(pattern, '<span class="' + settings_obj.className + '"data-content="$1">$1</span>');
                     $(a).replaceWith(d)
                 }
             } else 
             {
-            1 == a.nodeType && a.childNodes && (!/(script|style)/i.test(a.tagName) && a.className != c.className) && h(a);
+            1 == a.nodeType && a.childNodes && (!/(script|style)/i.test(a.tagName) && a.className != settings_obj.className) && addClassNameToFindReuslt(a);
             }
     }
-    var c = {
-        split: "\\s+",
-        className: "highlight",
-        caseSensitive: !1,
-        strictly: !1,
-        remove: !0
-    }, c = $.extend(c, k);
-    c.remove && l();
-    b = $.trim(b);
-   
-    var g = c.strictly ? "" : "\\S*"
-      //  m = RegExp("(" + g + b.replace(RegExp(c.split, "g"), g + "|" + g) + g + ")", (c.caseSensitive ? "" : "i") + "g");
-      //регулярное выражение, которое отвечает за поиск денежных выражений
-    var m = RegExp(/(\d[\d|.| |,]+)/, (c.caseSensitive ? "" : "i") + "g");
-        
-       // m = RegExp("Вот");
+    
     return this.each(function () {
-        b && h(this);
+        addClassNameToFindReuslt(this);
     })
 };
 
-$(function () {
-$('#scan').click(function () {
-console.log($(this)[0].offsetTop);
-       var settings = {};
-       var pattern = $('#pattern').val();
-       $("#right").prop("checked") && (settings.strictly = true);
-       $("#case").prop("checked") && (settings.caseSensitive = true);
-       $("#remove").prop("checked") && (settings.remove = false);
-       pattern && $("body").highlight(pattern, settings)
-   })
-})
- $(function () {
-  $('#fuck').click(function () {
-  
-console.log($(this)[0].innerHTML);
-  })
- })
 // выполнение функции парсинга и тегирования при загрузке страницы
 start = function() {
-   var settings = {};
-      var pattern = $('#pattern').val();
-      //  $("#right").prop("checked") && (settings.strictly = true);
-      //  $("#case").prop("checked") && (settings.caseSensitive = true);
-      //  $("#remove").prop("checked") && (settings.remove = false);
-      //  pattern && 
-    $("p").highlight(pattern, settings)
+    $("li").highlight(RegExp(/(\d[\d|.| |,]+)/, "gi"));
    
     Tipped.create('.highlight', function(element) {
      var target = $(element).data('content').toString( );
      var text="12";
      var xhr = new XMLHttpRequest();
-     xhr.open('GET', 'http://api.obr.space/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
+     xhr.open('GET', 'https://space-obr-api-stage.herokuapp.com/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
      xhr.send();
      // (3)
        if (xhr.status != 200) {
