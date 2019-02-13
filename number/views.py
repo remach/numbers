@@ -23,15 +23,15 @@ class NumberViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         value = self.request.query_params.get('value', None)
         if value:
-            queryset = Number.objects.extra(select={'d_field': 'abs({} - value)'.format(value)}).order_by('d_field')[:1]
+            queryset = Number.objects.extra(select={'d_field': 'abs({} - value)'.format(value),'rnd':'random()' }).filter(value__gte=float(value)*0.9,value__lte=float(value)*1.1).order_by('rnd')[:1]
         else: 
-            queryset = Number.objects.all()
+            queryset = Number.objects.all()[:10]
         return queryset
 
 @api_view(['GET', 'PUT'])
 def number_list(request):
     if request.method == 'GET':
-        numbers = Number.objects.all()
+        numbers = Number.objects.all()[:10]
         serializer = NumberSerializer(numbers, many=True)
         return Response(serializer.data)
 

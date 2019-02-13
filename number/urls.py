@@ -28,13 +28,13 @@ from number import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
-#router.register(r'number', views.NumberList.as_view(),'Number' )
+router.register(r'number', views.NumberViewSet,'Number' )
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('^number/(?P<value>.+)/$', views.NumberList.as_view()),
-    path(r'number/', views.number_list),
+    path(r'numberlist/', views.number_list),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
