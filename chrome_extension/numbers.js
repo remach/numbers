@@ -1,15 +1,9 @@
 //функция парсинга и тегирования
 $.fn.highlight = function (pattern, settings_arg="highlight") {
       var settings_obj = {
-        // split: "\\s+",
         className: "highlight",
-        // caseSensitive: !1,
-        // strictly: !1,
-        // remove: !0
       };
       settings_obj = $.extend(settings_obj, settings_arg);
-      //c.remove && l();
-     // b = $.trim(b); //WTF?
     function addClassNameToFindReuslt(element) {
         element = element.childNodes;
         for (var e = element.length, a; a = element[--e];)
@@ -32,7 +26,7 @@ $.fn.highlight = function (pattern, settings_arg="highlight") {
 
 // выполнение функции парсинга и тегирования при загрузке страницы
 start = function() {
-    $("li").highlight(RegExp(/(\d[\d|.| |,]+)/, "gi"));
+    $("body").highlight(RegExp(/(\d[\d|.| |,]+)/, "gi"));
    
     Tipped.create('.highlight', function(element) {
      var target = $(element).data('content').toString( );
