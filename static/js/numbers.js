@@ -1,3 +1,8 @@
+var script = document.createElement("SCRIPT");
+script.src = 'http://code.jquery.com/jquery-1.12.4.min.js';
+script.type = 'text/javascript';
+document.getElementsByTagName("head")[0].appendChild(script);
+
 //функция парсинга и тегирования
 $.fn.highlight = function (b, k) {
     function l() {
@@ -74,7 +79,7 @@ $(window).load(function() {
        $("#remove").prop("checked") && (settings.remove = false);
        pattern && $("div").highlight(pattern, settings)
     Tipped.create('.highlight', function(element) {
-     var target = $(element).data('content');
+     var target = $(element).data('content').toString( );
      var text="12";
      var xhr = new XMLHttpRequest();
      xhr.open('GET', 'http://api.obr.space/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
