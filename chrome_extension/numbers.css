@@ -1,0 +1,8 @@
+body{
+    background-color: rgb(253, 253, 229);
+  }
+#sticky_block{
+display:block;
+position:sticky;
+top:0;
+}
