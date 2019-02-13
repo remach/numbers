@@ -7,8 +7,8 @@ $.fn.highlight = function (pattern, settings_arg="highlight") {
     function addClassNameToFindReuslt(element) {
         element = element.childNodes;
         for (var e = element.length, a; a = element[--e];)
-            if (3 == a.nodeType) {
-                if (!/^\s+$/.test(a.data)) {
+            if (3 == a.nodeType) { // TEXT_NODE
+                if (!/^\s+$/.test(a.data)) { //only letters
                     var d = a.data,
                         d = d.replace(pattern, '<span class="' + settings_obj.className + '"data-content="$1">$1</span>');
                     $(a).replaceWith(d)
