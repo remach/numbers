@@ -32,23 +32,24 @@ start = function() {
      var target = $(element).data('content').toString( );
      var text="12";
      var xhr = new XMLHttpRequest();
-     xhr.open('GET', 'https://space-obr-api-stage.herokuapp.com/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
+     xhr.open('GET', 'https://space-obr-api-dev.herokuapp.com/number/?format=json&value='+target.replace(/ /gi,"").replace(',','.'), false);
      xhr.send();
      // (3)
        if (xhr.status != 200) {
        console.log("error");
      } else {
        var response = JSON.parse(xhr.responseText);
-       console.log(response.results[0].value + response.results[0].unit + " - "+ response.results[0].description_text);
-       text = response.results[0].value + response.results[0].unit + " - "+ response.results[0].description_text;
-     }
-   
-     return {
-       title: $(element).data('title'),
-       content:text
-     };
+       console.log(response.results[0].value + response.results[0].unit + " - "+ response.results[0].link);
+       text = "<a href='"+response.results[0].link+"'>"+ response.results[0].description_text+"</a>";
+       title = parseFloat(response.results[0].value).toLocaleString() + " "+ response.results[0].unit;
+       return{
+        title: title ,
+        content: text,
+       }
+       
+      }
    }, {
-     skin: 'light'
+    maxWidth: 200
    });
 }; 
 
