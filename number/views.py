@@ -2,6 +2,11 @@ from django.shortcuts import render
 from number.models import Number
 from django.contrib.auth.models import User, Group
 
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from rest_framework import viewsets, generics
 from django.http import HttpResponse
 from number.serializers import NumberSerializer, GroupSerializer, UserSerializer
@@ -23,19 +28,22 @@ class NumberViewSet(viewsets.ModelViewSet):
             queryset = Number.objects.all()
         return queryset
 
-# Create your views here.
-class NumberList(generics.ListAPIView):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
+@api_view(['GET', 'PUT'])
+def number_list(request):
+    if request.method == 'GET':
+        numbers = Number.objects.all()
+        serializer = NumberSerializer(numbers, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = NumberSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     serializer_class = NumberSerializer
     
-    def get_queryset(self):
-        value = self.request.query_params.get('value', None)
-        queryset = Number.objects.extra(select={'d_field': '{} - value'.format(value)}).order_by('d_field')[:3]
-        return queryset
-
-
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
