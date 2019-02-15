@@ -28,14 +28,14 @@ class NumberViewSet(viewsets.ModelViewSet):
             queryset = Number.objects.all()[:10]
         return queryset
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'POST'])
 def number_list(request):
     if request.method == 'GET':
         numbers = Number.objects.all()[:10]
         serializer = NumberSerializer(numbers, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
+    elif request.method == 'POST':
         serializer = NumberSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

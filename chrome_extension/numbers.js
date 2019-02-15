@@ -10,7 +10,7 @@ $.fn.highlight = function (pattern, settings_arg="highlight") {
             if (3 == a.nodeType) { // TEXT_NODE
                 if (!/^\s+$/.test(a.data)) { //only letters
                     var d = a.data,
-                        d = d.replace(pattern, '<span class="' + settings_obj.className + '"data-content="$1">$1</span>');
+                        d = d.replace(pattern, '<span class="' + settings_obj.className + ' "data-content="$1">$1</span>');
                     $(a).replaceWith(d)
                 }
             } else 
