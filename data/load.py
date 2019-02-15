@@ -3,7 +3,7 @@ import datetime
 
 
 
-f = csv.reader(open("mskCredit.csv", "r",newline='', encoding="utf8"),delimiter=';' )
+f = csv.reader(open("data/mskCredit.csv", "r",newline='', encoding="utf8"),delimiter=';' )
 for row in f:
     payload= {
         "value": row[4].replace(' ','').replace(',','.'),
@@ -12,6 +12,6 @@ for row in f:
     "link": "http://budget.mos.ru/",
     "pub_date": datetime.datetime.now()
     }
-    r = requests.put("http://127.0.0.1:8000/number/", data=payload)
+    r = requests.post("http://127.0.0.1:8000/number/", data=payload)
     print(row[4])
-    
+    break
