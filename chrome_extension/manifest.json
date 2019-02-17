@@ -7,12 +7,12 @@
   "content_scripts" : [{
     "matches": ["<all_urls>"],
     "js" : [
-      "jquery.js","tipped.js","numbers.js"],
+      "js/jquery.js","js/tipped.js","js/numbers.js"],
       "css" : [
-        "numbers.css","tipped.css"
+        "css/numbers.css","css/tipped.css"
       ]
     }],
-  "web_accessible_resources":["numbers.js"],
+  "web_accessible_resources":["https://s3.us-east-2.amazonaws.com/api.obr.space/dev"],
   "background": {
     "scripts": [
       "background.js"
