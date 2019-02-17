@@ -45,6 +45,18 @@
             "django": true
         },
         {
+            "name": "Python: TEST Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "console": "integratedTerminal",
+            "args": [
+                "test",
+                ".\\number\\",
+            ],
+            "django": true
+        },
+        {
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
