@@ -3,12 +3,12 @@ import json
 from django.test import TestCase, Client
 from django.utils import timezone
 from django.urls import reverse
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, APITestCase
 from rest_framework import status
 from .models import Number
 
-client = Client()
-
+#client = Client()
+#factory = APIRequestFactory()
 class NumberModelTests(TestCase):
     def test_was_published_recently_with_future_date(self):
         """
@@ -20,16 +20,16 @@ class NumberModelTests(TestCase):
         self.assertIs(future_number.was_published_recently(), False)
 
 # Create your tests here.
-class CreateNewNumberRestTests(TestCase):
+class CreateNewNumberRestTests(APITestCase):
     def setUp(self):
-        self.valid_payload = [{
+        self.valid_payload = {
         "value": 333,
         "description_text": '__test',
         "unit": "руб",
         "link": "http://budget.mos.ru/",
         "pub_date": datetime.datetime.now().isoformat()
         }
-        ]
+        
 
         self.invalid_payload = {
         'name': '',
@@ -39,16 +39,15 @@ class CreateNewNumberRestTests(TestCase):
         }
 
     def test_create_valid_numbers(self):
-        response = client.post(
+        response = self.client.post(
         reverse('Number-list'),
             data=json.dumps(self.valid_payload),
             content_type='application/json'
         )
-        print(reverse('Number-list'))
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_invalid_numbers(self):
-        response = client.post(
+        response = self.client.post(
             reverse('Number-list'),
             data=json.dumps(self.invalid_payload),
             content_type='application/json'
