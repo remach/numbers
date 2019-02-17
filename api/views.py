@@ -27,12 +27,12 @@ class NumberList(generics.ListCreateAPIView):
             queryset = Number.objects.all()[:7]
         return queryset
     
-    def create(self, request, format=None):
-        serializer = NumberSerializer(data=request.data, many=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def create(self, request, format=None):
+    #     serializer = NumberSerializer(data=request.data, many=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
 
