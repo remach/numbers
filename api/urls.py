@@ -10,6 +10,6 @@ router.register(r'groups', views.GroupViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('number/', views.NumberList.as_view()),
-    path('number/<int:pk>/', views.NumberDetail.as_view()),
+    path('number/<int:pk>/', views.NumberDetail.as_view(),name='number-detail'),
 
 ]
