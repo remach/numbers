@@ -2,64 +2,23 @@ from django.shortcuts import render
 from number.models import Number
 from django.contrib.auth.models import User, Group
 
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from rest_framework import viewsets, generics
 from django.http import HttpResponse
-from number.serializers import NumberSerializer, GroupSerializer, UserSerializer
+
 
 # Create your views here.
-class NumberViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    #value =1000# self.request.query_params.get('value', None)
-    #queryset = Number.objects.extra(select={'d_field': '{} - value'.format(value)}).filter(value__range=(value-100,value+100)).order_by('d_field')
-    serializer_class = NumberSerializer
-    
-    def get_queryset(self):
-        value = self.request.query_params.get('value', None)
-        if value:
-            queryset = Number.objects.extra(select={'d_field': 'abs({} - value)'.format(value),'rnd':'random()' }).filter(value__gte=float(value)*0.9,value__lte=float(value)*1.1).order_by('rnd')[:1]
-        else: 
-            queryset = Number.objects.all()[:10]
-        return queryset
 
-@api_view(['GET', 'POST'])
-def number_list(request):
-    if request.method == 'GET':
-        numbers = Number.objects.all()[:10]
-        serializer = NumberSerializer(numbers, many=True)
-        return Response(serializer.data)
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
 
-    elif request.method == 'POST':
-        serializer = NumberSerializer(data=request.data, many=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
 
-    serializer_class = NumberSerializer
-    
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
 
 def index(request):
-     r = requests.get('http://httpbin.org/status/418')
-     print(r.text)
-     return HttpResponse('<pre>' + r.text + '</pre>') 
+    latest_question_list = Number.objects.order_by('-pub_date')[:5]
+    output = ', '.join([q.description_text for q in latest_question_list])
+    return HttpResponse(output)
+

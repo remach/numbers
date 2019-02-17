@@ -16,12 +16,13 @@ for row in f:
     }
     )
     i=i+1
-    if i == 1000:
-        print(payload)
+    print(i)
+    if 20 == i:
+        #print(payload)
         i=0
-        r = requests.post("http://127.0.0.1:8000/number/", data=json.dumps(payload))
-        print
+        r = requests.post("http://127.0.0.1:8000/api/number/", json=payload)
+        print(r)
         payload= []
-
+        break
     
     

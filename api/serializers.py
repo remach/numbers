@@ -8,6 +8,7 @@ class NumberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Number
         fields = '__all__'
+        
    
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
