@@ -40,7 +40,7 @@ start = function() {
      } else {
        var response = JSON.parse(xhr.responseText);
        console.log(response.results[0].value + response.results[0].unit + " - "+ response.results[0].link);
-       text = "<a href='"+response.results[0].link+"'>"+ response.results[0].description_text+"</a>";
+       text = "<a href='"+response.results[0].link+"'>"+ response.results[0].description_text+"</a><a></a>";
        title = parseFloat(response.results[0].value).toLocaleString() + " "+ response.results[0].unit;
        return{
         title: title ,
